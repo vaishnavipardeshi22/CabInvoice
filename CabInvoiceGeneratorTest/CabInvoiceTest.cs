@@ -26,10 +26,14 @@ namespace CabInvoiceGeneratorTest
             this.cabInvoiceGenerator = new CabInvoice();
         }
 
+        /// <summary>
+        /// Test method to check total fare of the journey.
+        /// </summary>
         [Test]
-        public void Test1()
+        public void GivenDistanceAndTime_WhenCalculated_ReturnTotalFare()
         {
-            Assert.Pass();
+            double cabInvoiceGeneratorTotalFare = this.cabInvoiceGenerator.GetTotalFare(5.0, 5);
+            Assert.AreEqual(55.0, cabInvoiceGeneratorTotalFare);
         }
     }
 }
