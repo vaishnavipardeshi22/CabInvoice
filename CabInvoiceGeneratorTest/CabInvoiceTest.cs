@@ -68,5 +68,19 @@ namespace CabInvoiceGeneratorTest
             InvoiceSummary summary = new InvoiceSummary(2, 440.1);
             Assert.AreEqual(summary, invoiceSummary);
         }
+
+        /// <summary>
+        /// Test method to check invoice summary of particular user.
+        /// </summary>
+        [Test]
+        public void GivenUserIdAndRides_ShouldReturnUserInvoiceSummary()
+        {
+            string userId = "user@.com";
+            Rides[] rides = { new Rides(25.12, 40), new Rides(12.39, 25) };
+            this.cabInvoiceGenerator.AddRides(userId, rides);
+            InvoiceSummary invoiceSummary = this.cabInvoiceGenerator.GetInvoiceSummary(userId);
+            InvoiceSummary summary = new InvoiceSummary(2, 440.1);
+            Assert.AreEqual(invoiceSummary, summary);
+        }
     }
 }
