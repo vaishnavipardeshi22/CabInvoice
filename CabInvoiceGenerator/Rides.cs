@@ -15,17 +15,33 @@ namespace CabInvoiceGenerator
     {
         public double Distance;
         public int Time;
+        public RideType RideTypeValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Rides"/> class.
         /// Constuctor for model rides.
         /// </summary>
+        /// <param name="rideType"></param>
         /// <param name="distance"></param>
         /// <param name="time"></param>
-        public Rides(double distance, int time)
+        public Rides(RideType rideType, double distance, int time)
         {
+            this.RideTypeValue = rideType;
             this.Distance = distance;
             this.Time = time;
+        }
+
+        public enum RideType
+        {
+            /// <summary>
+            /// Enum for normal ride.
+            /// </summary>
+            NORMAL_RIDE,
+
+            /// <summary>
+            /// Enum for premium ride.
+            /// </summary>
+            PREMIUM_RIDE,
         }
     }
 }

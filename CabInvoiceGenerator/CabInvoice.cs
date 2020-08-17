@@ -13,28 +13,18 @@ namespace CabInvoiceGenerator
     /// </summary>
     public class CabInvoice
     {
-        private double costPerKilometer = 10;
-        private int costPerMinute = 1;
-        private int minimumFare = 5;
+        private double normalRideCostPerKilometer = 10;
+        private int normalRideCostPerMinute = 1;
+        private int normalRideMinimumFare = 5;
+        private double premiumRideCostPerKilometer = 15;
+        private int premiumRideCostPerMinute = 2;
+        private int premiumRideMinimumFare = 20;
 
         private RideRepository rideRepository;
 
         public CabInvoice()
         {
             this.rideRepository = new RideRepository();
-        }
-
-        /// <summary>
-        /// Function to calculate total fare of journey for single ride.
-        /// </summary>
-        /// <param name="distance"></param>
-        /// <param name="time"></param>
-        /// <returns>Total fare of journey.</returns>
-        public double GetTotalFare(double distance, int time)
-        {
-            double totalFare = (this.costPerKilometer * distance) + (this.costPerMinute * time);
-            totalFare = Math.Max(totalFare, this.minimumFare);
-            return totalFare;
         }
 
         /// <summary>
@@ -47,10 +37,19 @@ namespace CabInvoiceGenerator
             double totalFare = 0;
             foreach (Rides ride in rides)
             {
-                totalFare += (ride.Distance * this.costPerKilometer) + (ride.Time * this.costPerMinute);
+                if (ride.RideTypeValue.Equals(Rides.RideType.NORMAL_RIDE))
+                {
+                    totalFare += (ride.Distance * this.normalRideCostPerKilometer) + (ride.Time * this.normalRideCostPerMinute);
+                    totalFare = Math.Max(totalFare, this.normalRideMinimumFare);
+                }
+
+                if (ride.RideTypeValue.Equals(Rides.RideType.PREMIUM_RIDE))
+                {
+                    totalFare += (ride.Distance * this.premiumRideCostPerKilometer) + (ride.Time * this.premiumRideCostPerMinute);
+                    totalFare = Math.Max(totalFare, this.premiumRideMinimumFare);
+                }
             }
 
-            totalFare = Math.Max(totalFare, this.minimumFare);
             return totalFare;
         }
 
