@@ -15,6 +15,7 @@ namespace CabInvoiceGenerator
     {
         private double costPerKilometer = 10;
         private int costPerMinute = 1;
+        private int minimumFare = 5;
 
         /// <summary>
         /// Function to calculate total fare of journey.
@@ -24,7 +25,9 @@ namespace CabInvoiceGenerator
         /// <returns>Total fare of journey.</returns>
         public double GetTotalFare(double distance, int time)
         {
-            return (this.costPerKilometer * distance) + (this.costPerMinute * time);
+            double totalFare = (this.costPerKilometer * distance) + (this.costPerMinute * time);
+            totalFare = Math.Max(totalFare, this.minimumFare);
+            return totalFare;
         }
     }
 }

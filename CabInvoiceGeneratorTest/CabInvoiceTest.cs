@@ -35,5 +35,15 @@ namespace CabInvoiceGeneratorTest
             double cabInvoiceGeneratorTotalFare = this.cabInvoiceGenerator.GetTotalFare(5.0, 5);
             Assert.AreEqual(55.0, cabInvoiceGeneratorTotalFare);
         }
+
+        /// <summary>
+        /// Test method to check minimum fare.
+        /// </summary>
+        [Test]
+        public void GivenDistanceAndTime_WhenLessThanMinimumFareGetCalculated_ThenReturnMinimumFare()
+        {
+            double cabInvoiceGeneratorTotalFare = this.cabInvoiceGenerator.GetTotalFare(0.132, 1);
+            Assert.AreEqual(5, cabInvoiceGeneratorTotalFare);
+        }
     }
 }
