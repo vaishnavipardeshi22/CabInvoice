@@ -43,11 +43,7 @@ namespace CabInvoiceGeneratorTest
         [Test]
         public void GivenDistanceAndTime_WhenLessThanMinimumFareGetCalculated_ThenReturnMinimumFare()
         {
-            Rides[] rides =
-            {
-                new Rides(Rides.RideType.NORMAL_RIDE, 26.05, 29),
-                new Rides(Rides.RideType.NORMAL_RIDE, 12.39, 25),
-            };
+            Rides[] rides = { new Rides(Rides.RideType.NORMAL_RIDE, 0.132, 1) };
             double cabInvoiceGeneratorTotalFare = this.cabInvoiceGenerator.GetTotalFare(rides);
             Assert.AreEqual(5, cabInvoiceGeneratorTotalFare);
         }
@@ -60,7 +56,7 @@ namespace CabInvoiceGeneratorTest
         {
             Rides[] rides =
             {
-                new Rides(Rides.RideType.NORMAL_RIDE, 25.12, 40),
+                new Rides(Rides.RideType.NORMAL_RIDE, 26.05, 29),
                 new Rides(Rides.RideType.NORMAL_RIDE, 12.39, 25),
             };
             double cabInvoiceGeneratorTotalFare = this.cabInvoiceGenerator.GetTotalFare(rides);
