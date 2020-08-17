@@ -46,5 +46,16 @@ namespace CabInvoiceGenerator
             totalFare = Math.Max(totalFare, this.minimumFare);
             return totalFare;
         }
+
+        /// <summary>
+        /// Function to get invoice summary.
+        /// </summary>
+        /// <param name="rides"></param>
+        /// <returns>invoice summary.</returns>
+        public InvoiceSummary GetInvoiceSummary(Rides[] rides)
+        {
+            double totalFare = this.GetTotalFare(rides);
+            return new InvoiceSummary(rides.Length, totalFare);
+        }
     }
 }

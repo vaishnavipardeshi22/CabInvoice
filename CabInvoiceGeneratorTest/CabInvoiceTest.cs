@@ -56,5 +56,17 @@ namespace CabInvoiceGeneratorTest
             double cabInvoiceGeneratorTotalFare = this.cabInvoiceGenerator.GetTotalFare(rides);
             Assert.AreEqual(438.4, cabInvoiceGeneratorTotalFare);
         }
+
+        /// <summary>
+        /// Test method to calculate invoice summery.
+        /// </summary>
+        [Test]
+        public void GivenMultipleRides_WhenCalculated_ReturnInvoiceSummery()
+        {
+            Rides[] rides = { new Rides(25.12, 40), new Rides(12.39, 25) };
+            InvoiceSummary invoiceSummary = this.cabInvoiceGenerator.GetInvoiceSummary(rides);
+            InvoiceSummary summary = new InvoiceSummary(2, 440.1);
+            Assert.AreEqual(summary, invoiceSummary);
+        }
     }
 }

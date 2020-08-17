@@ -13,14 +13,7 @@ namespace CabInvoiceGenerator
     /// </summary>
     public class Rides
     {
-        /// <summary>
-        /// Variable declaration for distance.
-        /// </summary>
         public double Distance;
-
-        /// <summary>
-        /// Variable declaration for time.
-        /// </summary>
         public int Time;
 
         /// <summary>
