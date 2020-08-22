@@ -15,7 +15,7 @@ namespace CabInvoiceGenerator
     /// </summary>
     public class RideRepository
     {
-        private Dictionary<string, List<Rides>> userRides;
+        private readonly Dictionary<string, List<Rides>> userRides;
 
         public RideRepository()
         {
@@ -29,9 +29,17 @@ namespace CabInvoiceGenerator
         /// <param name="rides"></param>
         public void AddRides(string userId, Rides[] rides)
         {
-            List<Rides> list = new List<Rides>();
-            list.AddRange(rides);
-            this.userRides.Add(userId, list);
+            bool rideList = this.userRides.ContainsKey(userId);
+            if (rideList == false)
+            {
+                List<Rides> list = new List<Rides>();
+                list.AddRange(rides);
+                this.userRides.Add(userId, list);
+            }
+            else
+            {
+                this.userRides.Add(userId, new List<Rides>(rides));
+            }
         }
 
         /// <summary>

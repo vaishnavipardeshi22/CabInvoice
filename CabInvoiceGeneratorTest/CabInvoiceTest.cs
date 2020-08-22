@@ -98,6 +98,22 @@ namespace CabInvoiceGeneratorTest
         }
 
         /// <summary>
+        /// Test method to check invalid user id.
+        /// </summary>
+        [Test]
+        public void GivenInvalidUserId_ShouldThrowCustomException()
+        {
+            string userId = "User@.com";
+            Rides[] rides =
+            {
+                new Rides(Rides.RideType.NORMAL_RIDE, 25.12, 40),
+                new Rides(Rides.RideType.NORMAL_RIDE, 12.39, 25),
+            };
+            var exception = Assert.Throws<CabInvoiceException>(() => this.cabInvoiceGenerator.AddRides(userId, rides));
+            Assert.AreEqual(CabInvoiceException.ExceptionType.INVALID_USER, exception.exceptionType);
+        }
+
+        /// <summary>
         /// Test method to calculate total fare for normal ride.
         /// </summary>
         [Test]

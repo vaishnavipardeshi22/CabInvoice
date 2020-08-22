@@ -7,12 +7,14 @@ namespace CabInvoiceGenerator
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Main class for cab invoice generator.
     /// </summary>
     public class CabInvoice
     {
+        private readonly Regex userIdPattern = new Regex("^[a-z]{4,}[@][.][a-z]{3}$");
         private double normalRideCostPerKilometer = 10;
         private int normalRideCostPerMinute = 1;
         private int normalRideMinimumFare = 5;
@@ -37,16 +39,20 @@ namespace CabInvoiceGenerator
             double totalFare = 0;
             foreach (Rides ride in rides)
             {
-                if (ride.RideTypeValue.Equals(Rides.RideType.NORMAL_RIDE))
+                switch (ride.RideTypeValue)
                 {
-                    totalFare += (ride.Distance * this.normalRideCostPerKilometer) + (ride.Time * this.normalRideCostPerMinute);
-                    totalFare = Math.Max(totalFare, this.normalRideMinimumFare);
-                }
+                    case Rides.RideType.NORMAL_RIDE:
+                        totalFare += (ride.Distance * this.normalRideCostPerKilometer) + (ride.Time * this.normalRideCostPerMinute);
+                        totalFare = Math.Max(totalFare, this.normalRideMinimumFare);
+                        break;
 
-                if (ride.RideTypeValue.Equals(Rides.RideType.PREMIUM_RIDE))
-                {
-                    totalFare += (ride.Distance * this.premiumRideCostPerKilometer) + (ride.Time * this.premiumRideCostPerMinute);
-                    totalFare = Math.Max(totalFare, this.premiumRideMinimumFare);
+                    case Rides.RideType.PREMIUM_RIDE:
+                        totalFare += (ride.Distance * this.premiumRideCostPerKilometer) + (ride.Time * this.premiumRideCostPerMinute);
+                        totalFare = Math.Max(totalFare, this.premiumRideMinimumFare);
+                        break;
+
+                    default:
+                        throw new CabInvoiceException("Invalid ride type", CabInvoiceException.ExceptionType.INVALID_RIDE_TYPE);
                 }
             }
 
@@ -83,6 +89,11 @@ namespace CabInvoiceGenerator
         /// <param name="rides"></param>
         public void AddRides(string userId, Rides[] rides)
         {
+            if (!this.userIdPattern.IsMatch(userId))
+            {
+                throw new CabInvoiceException("Invalid user", CabInvoiceException.ExceptionType.INVALID_USER);
+            }
+
             this.rideRepository.AddRides(userId, rides);
         }
     }
